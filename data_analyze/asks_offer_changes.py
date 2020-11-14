@@ -29,5 +29,5 @@ def globalGetChanges(file_asks, file_offer, section):
     return data_1, data_2  # data_1{квалификация: количество}
 
 
-a = globalGetChanges("input/without_work2019.json", "input/opportunities2019.json", section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
+a = globalGetChanges("output/without_work2019.json", "output/opportunities2019.json", section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
 print(a)
