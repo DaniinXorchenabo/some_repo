@@ -2,8 +2,7 @@ from bottle import route, run, error, template, request, response, Bottle
 from json import dumps
 app = application = Bottle()
 
-response.set_header('Access-Control-Allow-Origin', '*')
-response.add_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
+
 
 # class EnableCors(object):
 #     name = 'enable_cors'

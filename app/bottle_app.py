@@ -10,6 +10,8 @@ def hello():
 
 @app.route('/test', method=["GET", "POST"])
 def root_thie_site():
+    response.set_header('Access-Control-Allow-Origin', '*')
+    response.add_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
     # response.headers['Content-type'] = 'application/json'
     #  <url>?field_of_activity=bool_or_name&qualification=bool_or_name&age=1@3@5-10&work_years=1@3@5-10&gender=m|w|mw
     # ?field_of_activity=РАЗДЕЛ F СТРОИТЕЛЬСТВО&qualification=Бетонщик&year=2017-2019&job_opening&proposal_workless
