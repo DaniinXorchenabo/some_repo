@@ -10,6 +10,7 @@ def hello():
 @route('/test', method=["GET", "POST"])
 def root_thie_site():
     #  <url>?field_of_activity=bool_or_name&qualification=bool_or_name&age=1@3@5-10&work_years=1@3@5-10&gender=m|w|mw
+    # ?field_of_activity=РАЗДЕЛ F СТРОИТЕЛЬСТВО&qualification=Бетонщик&year=2017-2019&job_opening&proposal_workless
     print('test')
 
     if request.GET:
@@ -27,7 +28,7 @@ def root_thie_site():
 @route('/')
 def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
-    return temp("main_page", param="dfdf")
+    return "main page"
 
 
 @error(404)
@@ -36,4 +37,4 @@ def error404(error):
 
 
 if __name__ == '__main__':
-    run(host='localhost', port=8080, debug=True)
+    run(app=app, host="0.0.0.0", port=8080, quiet=False, reloader=False)

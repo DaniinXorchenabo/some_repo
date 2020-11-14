@@ -1,6 +1,6 @@
-from bottle import route, run, error, template, request, response
+from bottle import route, run, error, template, request, response, Bottle
 from json import dumps
-
+app = application = Bottle()
 
 def temp(file_name, *args,  title="", extension=".html", template_dir="view/", **kwargs):
     file_name = template_dir + file_name + extension
