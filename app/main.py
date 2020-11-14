@@ -28,7 +28,7 @@ def root_thie_site():
 @app.route('/')
 def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
-    return "main page"
+    return "main page 1111"
 
 
 
