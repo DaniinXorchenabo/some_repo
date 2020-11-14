@@ -1,4 +1,5 @@
 from json import loads, dumps
+from os.path import isfile
 
 def unsetBrackets(anydict):
     arrkeys = list(map(lambda x: x[:x.find("(") - 1], list(anydict.keys())))
@@ -8,9 +9,15 @@ def unsetBrackets(anydict):
 
 
 def globalGetChanges(file_asks, file_offer, section):
+    if not isfile(file_asks):
+        from data_analyze.ex import generate_opportunities_and_without_work_json_file
+        generate_opportunities_and_without_work_json_file()
     with open(file_asks, "r") as file:
         data_1 = loads(file.read())
 
+    if not isfile(file_offer):
+        from data_analyze.ex import generate_opportunities_and_without_work_json_file
+        generate_opportunities_and_without_work_json_file()
     with open(file_offer, "r") as file:
         data_2 = loads(file.read())
 

@@ -11,7 +11,7 @@ if __name__ == '__main__':
 def split_url_params(params: dict) -> dict:
     from functools import reduce
 
-    data_sets = [ {"field_of_activity", "qualification", "job_opening", "proposal_workless"}: ""]
+    data_sets = { {"field_of_activity", "qualification", "job_opening", "proposal_workless"}: ""}
     renaming_dict = { "field_of_activity": "field_of_activity",
                       "qualification": "qualification",
                       "age": "age",
