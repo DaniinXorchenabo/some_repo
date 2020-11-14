@@ -8,16 +8,18 @@ def unsetBrackets(anydict):
     return dict(temp)
 
 
-def globalGetChanges(file_asks, file_offer, section):
+def globalGetChanges(year, section):
+    file_asks = str(f"output/without_work{year}.json")
+    file_offer = str(f"output/opportunities{year}.json")
     if not isfile(file_asks):
         from data_analyze.ex import generate_opportunities_and_without_work_json_file
-        generate_opportunities_and_without_work_json_file()
+        generate_opportunities_and_without_work_json_file(year)
     with open(file_asks, "r") as file:
         data_1 = loads(file.read())
 
     if not isfile(file_offer):
         from data_analyze.ex import generate_opportunities_and_without_work_json_file
-        generate_opportunities_and_without_work_json_file()
+        generate_opportunities_and_without_work_json_file(year)
     with open(file_offer, "r") as file:
         data_2 = loads(file.read())
 
@@ -36,5 +38,6 @@ def globalGetChanges(file_asks, file_offer, section):
     return data_1, data_2  # data_1{квалификация: количество}
 
 
-a = globalGetChanges("output/without_work2019.json", "output/opportunities2019.json", section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
-print(a)
+if __name__ == '__main__':
+    a = globalGetChanges(2018, section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
+    print(a)

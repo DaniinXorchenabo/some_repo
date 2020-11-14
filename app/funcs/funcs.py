@@ -8,6 +8,10 @@ if __name__ == '__main__':
     from libs import *
 
 
+def job_and_workless():
+    from data_analyze.asks_offer_changes import globalGetChanges
+    globalGetChanges()
+
 def split_url_params(params: dict) -> dict:
     from functools import reduce
 
