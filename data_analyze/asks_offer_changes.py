@@ -7,14 +7,12 @@ def unsetBrackets(anydict):
     return dict(temp)
 
 
-def globalGetChanges(file_asks, file_offer):
+def globalGetChanges(file_asks, file_offer, section):
     with open(file_asks, "r") as file:
         data_1 = loads(file.read())
 
     with open(file_offer, "r") as file:
         data_2 = loads(file.read())
-
-    section = 'РАЗДЕЛ F СТРОИТЕЛЬСТВО'
 
     data_1 = unsetBrackets(data_1[section])
     data_2 = unsetBrackets(data_2[section])
@@ -22,9 +20,14 @@ def globalGetChanges(file_asks, file_offer):
     null_elements1 = set(data_1.keys()) - set(data_2.keys())
     null_elements2 = set(data_2.keys()) - set(data_1.keys())
 
-    both = set(list(data_1.keys()) + list(data_2.keys())) - null_elements1 - null_elements2
+    for nul_el in list(null_elements1) + list(null_elements2):
+        data_1[nul_el] = data_1.get(nul_el, 0)
+        data_2[nul_el] = data_2.get(nul_el, 0)
 
-    return both, data_1, data_2  # data_1{квалификация: количество}
+    # both = set(list(data_1.keys()) + list(data_2.keys())) - null_elements1 - null_elements2
+
+    return data_1, data_2  # data_1{квалификация: количество}
 
 
-globalGetChanges("/content/without_work2019.json", "opportunities2019.json")
+a = globalGetChanges("input/without_work2019.json", "input/opportunities2019.json", section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
+print(a)
