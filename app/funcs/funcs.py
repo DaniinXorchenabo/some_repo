@@ -30,13 +30,10 @@ def workless_only(years: list, section: str, qualifications: set):
     return workless
 
 
-def job_and_workless(years: list, section: str, qualifications: set):
+def job_and_workless(years: list , section: str, qualifications: set):
     job, workless = job_and_workless_base(years, qualifications)
-    job = {years[ind]: val for ind, val in
-           enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), job))}
-    workless = {years[ind]: val for ind, val in enumerate(map(lambda i:
-                                                              list(filter(lambda j: j[0] in qualifications, i.items())),
-                                                              workless))}
+    job =       {years[ind]: val for ind, val in enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), job))}
+    workless =  {years[ind]: val for ind, val in enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), workless))}
     return job, workless
 
     # print(*job.items(), sep="\n", end="\n--------------\n")
@@ -69,6 +66,8 @@ def split_url_params(params: dict) -> dict:
         frozenset(("year", "job_opening")): job_only,
         frozenset(("year", "proposal_workless")): workless_only,
     }
+    if set_keys in data_sets:
+        data_sets[frozenset(set_keys)]()
 
     renaming_dict = {"field_of_activity": "field_of_activity",
                      "qualification": "qualification",
@@ -91,5 +90,30 @@ def split_url_params(params: dict) -> dict:
     return dict()
 
 
-# job_and_workless([2017, 2018], ["Арматурщик", "Бетонщик", "Бухгалтер"])
-# split_url_params(dict())
+#----------------------------------------------
+def split_url_params_2(params: dict):
+    if "field_of_activity" not in params or "qualification" not in params:
+        return dict()
+    field = params.pop("field_of_activity")
+    qualif = set(params.pop("qualification").split('@'))
+    job_opening = params.pop("job_opening", None)
+    proposal_workless = params.pop("proposal_workless", None)
+    params = create_filt_from_param(params)
+    get_data(field=field, qualif=qualif, job_opening=job_opening, proposal_workless=proposal_workless, filt=params)
+    return dict()
+
+def create_filt_from_param(param: dict):
+    return {key: lambda *a, **k: True for key, val in param.items()}
+
+def get_work_and_job_data(field, filt=lambda *a, **k: True, **kwargs):
+    from data_analyze.asks_offer_changes import globalGetChanges
+
+    return zip(*[globalGetChanges(year, field, **kwargs) for year in filter(filt, range(1900, 2100))])
+
+def get_data(field=None, qualif=set(), filt=dict, **kwargs):
+    if field:
+        data = get_work_and_job_data(field, filt.pop("year", lambda *a, **k: True), **kwargs)
+        data = [map(lambda i: list(filter(lambda j: j[0] in qualif, i.items())), dat) for dat in data]
+        print(*data, sep='\n')
+        # data = [[one_year for one_year in dat] for dat in data]
+

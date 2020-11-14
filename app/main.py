@@ -14,11 +14,11 @@ def root_thie_site():
     print('test')
 
     if request.GET:
-        params = split_url_params(dict(request.params))
-        print(params)
+        # params = split_url_params_2(dict(request.params))
+        # print(params)
         rv = [{"id": 1, "name": "Test Item 1"}, {"id": 2, "name": "Test Item 2"}]
         response.content_type = 'application/json'
-        print(dumps(rv))
+        # print(dumps(rv))
         return dumps(rv)
     # http://localhost:8080/test?is_work=yes
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
@@ -33,4 +33,5 @@ def root_thie_site():
 
 
 if __name__ == '__main__':
-    run(app=app, host="0.0.0.0", port=8080, quiet=False, reloader=False)
+    app.install(EnableCors())
+    run(app=app, host="0.0.0.0", port=8090, quiet=False, reloader=False)
