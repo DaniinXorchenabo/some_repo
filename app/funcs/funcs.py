@@ -8,14 +8,17 @@ if __name__ == '__main__':
     from libs import *
 
 
-def job_and_workless():
+def job_and_workless(years: list, qualifications: list):
     from data_analyze.asks_offer_changes import globalGetChanges
-    globalGetChanges()
+    job, workless = zip(*[globalGetChanges(year, "РАЗДЕЛ F СТРОИТЕЛЬСТВО") for year in years])
+    print(*job)
+    print(*workless)
+
 
 def split_url_params(params: dict) -> dict:
     from functools import reduce
 
-    data_sets = { {"field_of_activity", "qualification", "job_opening", "proposal_workless"}: ""}
+    data_sets = { {"field_of_activity", "qualification", "year", "job_opening", "proposal_workless"}: job_and_workless}
     renaming_dict = { "field_of_activity": "field_of_activity",
                       "qualification": "qualification",
                       "age": "age",
@@ -36,3 +39,4 @@ def split_url_params(params: dict) -> dict:
 
 
 
+job_and_workless([2017,2018,2019], [])

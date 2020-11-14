@@ -1,6 +1,9 @@
 from json import loads, dumps
 from os.path import isfile
 
+path = ""
+
+
 def unsetBrackets(anydict):
     arrkeys = list(map(lambda x: x[:x.find("(") - 1], list(anydict.keys())))
     arr_values = list(anydict.values())
@@ -9,8 +12,8 @@ def unsetBrackets(anydict):
 
 
 def globalGetChanges(year, section):
-    file_asks = str(f"output/without_work{year}.json")
-    file_offer = str(f"output/opportunities{year}.json")
+    file_asks = os_join(path, str(f"output/without_work{year}.json"))
+    file_offer = os_join(path, str(f"output/opportunities{year}.json"))
     if not isfile(file_asks):
         from data_analyze.ex import generate_opportunities_and_without_work_json_file
         generate_opportunities_and_without_work_json_file(year)
@@ -38,6 +41,25 @@ def globalGetChanges(year, section):
     return data_1, data_2  # data_1{квалификация: количество}
 
 
+my_dir = "data_analyze"
 if __name__ == '__main__':
     a = globalGetChanges(2018, section="РАЗДЕЛ F СТРОИТЕЛЬСТВО")
     print(a)
+else:
+    from os import getcwd
+    from os.path import split as os_split, exists, join as os_join
+
+    path = getcwd()
+    while my_dir not in path:
+        if exists(os_join(path, my_dir)):
+            path = os_join(path, my_dir)
+            break
+        now_dir = os_split(path)[1]
+        path = os_split(path)[0]
+        print(path, now_dir)
+    else:
+        all_path, end_dir = os_split(path)
+        while end_dir != my_dir:
+            now_dir = path[1]
+            path = os_split(path[0])[0] if not bool(path[-1]) else path[0]
+    print('end', path)
