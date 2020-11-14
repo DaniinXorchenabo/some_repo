@@ -8,35 +8,55 @@ if __name__ == '__main__':
     from libs import *
 
 
-def job_and_workless(years: list, qualifications: list):
+def job_and_workless(years: list, section: str, qualifications: set):
     from data_analyze.asks_offer_changes import globalGetChanges
-    job, workless = zip(*[globalGetChanges(year, "РАЗДЕЛ F СТРОИТЕЛЬСТВО") for year in years])
-    print(*job)
-    print(*workless)
+    job, workless = zip(*[globalGetChanges(year, section) for year in years])
+    job = {years[ind]: val for ind, val in enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), job))}
+    workless = {years[ind]: val for ind, val in enumerate(map(lambda i:
+                                                              list(filter(lambda j: j[0] in qualifications, i.items())), workless))}
+    return workless
+    # print(*job.items(), sep="\n", end="\n--------------\n")
+    # print(*workless.items(), sep="\n", end="\n--------------\n")
 
+def job_and_workless_count_filt(data_func):
+    return lambda years, section, qualifications, row_nums: list(filter(create_filt_from_number_set(row_nums), data_func(years, section, qualifications)))
 
-def split_url_params(params: dict) -> dict:
+def create_filt_from_number_set(arr):
     from functools import reduce
 
-    data_sets = { {"field_of_activity", "qualification", "year", "job_opening", "proposal_workless"}: job_and_workless}
+    if_filter_range_year = lambda string: (
+        f"({string.split('-')[0]} <= i < {string.split('-')[-1]})" if "-" in string else int(string))
+    all_if_for_year = lambda arr: ("lambda i:" + " or ".join([i for i in arr if type(i) == str] + [
+        "(i in [ " + reduce(lambda on, tw: f"{on}, {tw}", filter(lambda i: type(i) != str, arr)) + " ])"]))
+    return eval(all_if_for_year([if_filter_range_year(i) for i in arr.split('@')]))
+
+def split_url_params(params: dict) -> dict:
+
+
+    data_sets = { frozenset(("field_of_activity", "qualification", "year", "job_opening", "proposal_workless")): job_and_workless,
+                  frozenset(("field_of_activity", "qualification", "year", "job_opening", "proposal_workless", "count_filt")):
+                      job_and_workless_count_filt(job_and_workless),
+    }
     renaming_dict = { "field_of_activity": "field_of_activity",
                       "qualification": "qualification",
                       "age": "age",
                       "work_years": "work_years",
                       "gender": "gender",
                       "job_opening": "job_opening",
-                      "proposal_workless": "proposal_workless"
+                      "proposal_workless": "proposal_workless",
+                      "year": "year",
+                      "count_filt": "count_filt"
     }
-    if_filter_range_year = lambda string: (f"({string.split('-')[0]} <= i < {string.split('-')[-1]})" if "-" in string else int(string))
-    all_if_for_year = lambda arr: ("lambda i:" + " or ".join([i for i in arr if type(i) == str] + ["(i in [ " + reduce(lambda on, tw: f"{on}, {tw}", filter(lambda i: type(i) != str, arr)) + " ])"]))
 
-    transform_val_dict = {"age": lambda arr: all_if_for_year(if_filter_range_year(arr)),
-                          "work_years": lambda arr: all_if_for_year(if_filter_range_year(arr)),
+    transform_val_dict = {"age": create_filt_from_number_set,
+                          "work_years": create_filt_from_number_set,
                           "gender": lambda i: lambda param: param in {"m": ["м"], "w": ["ж"], "mw": ["м", "ж"]}.get(i, ["м", "ж"])}
-    params = {renaming_dict.get(key, key): val.split("@") for key, val in params.items()}
-    #
+
+    params = {renaming_dict.get(key, key): transform_val_dict.get(key, lambda i: i)(val) for key, val in params.items()}
+    print(params)
     return dict()
 
 
 
-job_and_workless([2017,2018,2019], [])
+job_and_workless([2017, 2018], ["Арматурщик", "Бетонщик", "Бухгалтер"])
+split_url_params(dict())

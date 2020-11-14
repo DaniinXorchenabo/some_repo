@@ -29,12 +29,15 @@ def globalGetChanges(year, section):
     data_1 = unsetBrackets(data_1[section])
     data_2 = unsetBrackets(data_2[section])
 
-    null_elements1 = set(data_1.keys()) - set(data_2.keys())
-    null_elements2 = set(data_2.keys()) - set(data_1.keys())
+    null_elements1 = set(data_1.keys()) - set(data_2.keys())  # элементы, которых нет во втором
+    null_elements2 = set(data_2.keys()) - set(data_1.keys())  # элементы, которых нет в первом
 
-    for nul_el in list(null_elements1) + list(null_elements2):
-        data_1[nul_el] = data_1.get(nul_el, 0)
-        data_2[nul_el] = data_2.get(nul_el, 0)
+    data_1.update({key: 0 for key in null_elements2})
+    data_2.update({key: 0 for key in null_elements1})
+    # print(set(data_1.keys()) == set(data_2.keys()))
+    # for nul_el in list(null_elements1) + list(null_elements2):
+    #     data_1[nul_el] = data_1.get(nul_el, 0)
+    #     data_2[nul_el] = data_2.get(nul_el, 0)
 
     # both = set(list(data_1.keys()) + list(data_2.keys())) - null_elements1 - null_elements2
 
