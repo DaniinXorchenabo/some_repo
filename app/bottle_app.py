@@ -16,7 +16,7 @@ def root_thie_site():
 
     if request.GET:
         #.decode('utf8')
-        params = split_url_params_2({key.decode('utf8'): val.decode('utf8') for key, val in dict(request.params).items()})
+        # params = split_url_params_2({key.decode('utf8'): val.decode('utf8') for key, val in dict(request.params).items()})
         # print(params)
         rv = [{"id": 1, "name": "Test Item 1"}, {"id": 2, "name": "Test Item 2"}]
         response.content_type = 'application/json'
