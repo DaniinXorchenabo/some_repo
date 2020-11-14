@@ -92,6 +92,7 @@ def split_url_params(params: dict) -> dict:
 
 #----------------------------------------------
 def split_url_params_2(params: dict):
+    print(params)
     if "field_of_activity" not in params or "qualification" not in params:
         return dict()
     field = params.pop("field_of_activity")
