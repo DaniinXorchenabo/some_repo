@@ -2,12 +2,12 @@ from funcs.libs import *
 from funcs.funcs import *
 
 
-@route('/hello')
+@app.route('/hello')
 def hello():
     return "Hello World!"
 
 
-@route('/test', method=["GET", "POST"])
+@app.route('/test', method=["GET", "POST"])
 def root_thie_site():
     #  <url>?field_of_activity=bool_or_name&qualification=bool_or_name&age=1@3@5-10&work_years=1@3@5-10&gender=m|w|mw
     # ?field_of_activity=РАЗДЕЛ F СТРОИТЕЛЬСТВО&qualification=Бетонщик&year=2017-2019&job_opening&proposal_workless
@@ -25,15 +25,11 @@ def root_thie_site():
     return temp("main_page", param="dfdf")
 
 
-@route('/')
+@app.route('/')
 def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
     return "main page"
 
-
-@error(404)
-def error404(error):
-    return 'Упс, извините страница не найдена!\n'
 
 
 if __name__ == '__main__':
