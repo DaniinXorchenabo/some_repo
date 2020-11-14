@@ -24,7 +24,7 @@ def globalGetChanges(file_asks, file_offer):
 
     both = set(list(data_1.keys()) + list(data_2.keys())) - null_elements1 - null_elements2
 
-    return both, data_1, data_2
+    return both, data_1, data_2  # data_1{квалификация: количество}
 
 
 globalGetChanges("/content/without_work2019.json", "opportunities2019.json")

@@ -11,14 +11,14 @@ if __name__ == '__main__':
 def split_url_params(params: dict) -> dict:
     from functools import reduce
 
-
+    data_sets = [ {"field_of_activity", "qualification", "job_opening", "proposal_workless"}: ""]
     renaming_dict = { "field_of_activity": "field_of_activity",
                       "qualification": "qualification",
                       "age": "age",
                       "work_years": "work_years",
                       "gender": "gender",
-                      "спрос": "",
-                      "предложение": ""
+                      "job_opening": "job_opening",
+                      "proposal_workless": "proposal_workless"
     }
     if_filter_range_year = lambda string: (f"({string.split('-')[0]} <= i < {string.split('-')[-1]})" if "-" in string else int(string))
     all_if_for_year = lambda arr: ("lambda i:" + " or ".join([i for i in arr if type(i) == str] + ["(i in [ " + reduce(lambda on, tw: f"{on}, {tw}", filter(lambda i: type(i) != str, arr)) + " ])"]))

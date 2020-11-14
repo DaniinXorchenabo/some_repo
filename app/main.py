@@ -36,12 +36,4 @@ def error404(error):
 
 
 if __name__ == '__main__':
-    from functools import reduce
-    print()
-
-    if_filter_range_year = lambda string: (f"({string.split('-')[0]} <= i < {string.split('-')[-1]})" if "-" in string else int(string))
-    all_if_for_year = lambda arr: eval("lambda i:" + " or ".join([i for i in arr if type(i) == str] + ["(i in [ " + reduce(lambda on, tw: f"{on}, {tw}", filter(lambda i: type(i) != str, arr)) + " ])"]))
-    string = "1@2@3@4@5@8-10@14-20"
-    string = [if_filter_range_year(i) for i in string.split("@")]
-    print(all_if_for_year(string))
     run(host='localhost', port=8080, debug=True)
