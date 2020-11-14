@@ -20,7 +20,7 @@ def root_thie_site():
 
     if request.GET:
         #.decode('utf8')
-        params = split_url_params_2dict(request.forms).items()})
+        params = split_url_params_2(dict(request.forms))
         # print(params)
         rv = [{"id": 1, "name": "Test Item 1"}, {"id": 2, "name": "Test Item 2"}]
         response.content_type = 'application/json'

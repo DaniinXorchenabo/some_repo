@@ -115,6 +115,6 @@ def get_data(field=None, qualif=set(), filt=dict, **kwargs):
     if field:
         data = get_work_and_job_data(field, filt.pop("year", lambda *a, **k: True), **kwargs)
         data = [map(lambda i: list(filter(lambda j: j[0] in qualif, i.items())), dat) for dat in data]
-        print(*data, sep='\n')
+        print('--&&^^^^^', *data, sep='\n')
         # data = [[one_year for one_year in dat] for dat in data]
 
