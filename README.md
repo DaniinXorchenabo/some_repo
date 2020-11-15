@@ -3,6 +3,30 @@
 installing:
 
     pip install requirements.txt
+    <You should create add/settings/settings.ini (You can rename settings_example.ini. It is all)>
+
+Starting:
+
+    python app/botttle_app.py
+
+Our servers:
+    
+    http://weirdeproject.pythonanywhere.com/
+    https://kadry-frontend.vercel.app/
+
+Our design:
+
+    https://www.figma.com/file/RyFGkANMEPZOngGrTFzOil/ДУРДОМ?node-id=0%3A1
+
+# Описание
+
+Часть репозитория, расположенная в папке app представляет из себя серверную чась проекта
+Она имеет API, позволяющее взаимодействовать с сервером. Пердполагается, что пользователи системы не будут
+заходить на сервер, поэтому на нем реализовано только API и никакого html.
+
+С клиентами взаимодействует другая часть системы - web-приложение, рассположенное в другом месте сети интернет
+Оно выступает своеобразным мостиком между клиентом и данными.
+
 
 # API
 
