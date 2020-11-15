@@ -30,10 +30,12 @@ def workless_only(years: list, section: str, qualifications: set):
     return workless
 
 
-def job_and_workless(years: list , section: str, qualifications: set):
+def job_and_workless(years: list, section: str, qualifications: set):
     job, workless = job_and_workless_base(years, qualifications)
-    job =       {years[ind]: val for ind, val in enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), job))}
-    workless =  {years[ind]: val for ind, val in enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), workless))}
+    job = {years[ind]: val for ind, val in
+           enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), job))}
+    workless = {years[ind]: val for ind, val in
+                enumerate(map(lambda i: list(filter(lambda j: j[0] in qualifications, i.items())), workless))}
     return job, workless
 
     # print(*job.items(), sep="\n", end="\n--------------\n")
@@ -51,7 +53,8 @@ def create_filt_from_number_set(arr):
     if_filter_range_year = lambda string: (
         f"({string.split('-')[0]} <= i < {string.split('-')[-1]})" if "-" in string else int(string))
     all_if_for_year = lambda arr: ("lambda i:" + " or ".join([i for i in arr if type(i) == str] + [
-        "(i in [ " + reduce(lambda on, tw: f"{on}, {tw}", list(filter(lambda i: type(i) != str, arr)) + ['-1 ', '-1 ']) + " ])"]))
+        "(i in [ " + reduce(lambda on, tw: f"{on}, {tw}",
+                            list(filter(lambda i: type(i) != str, arr)) + ['-1 ', '-1 ']) + " ])"]))
     return eval(all_if_for_year([if_filter_range_year(i) for i in arr.split('@')]))
 
 
@@ -90,7 +93,7 @@ def split_url_params(params: dict) -> dict:
     return dict()
 
 
-#----------------------------------------------
+# ----------------------------------------------
 def split_url_params_2(params: dict):
     # print('--=-=-=', params)
     if "field_of_activity" not in params or "qualification" not in params:
@@ -102,9 +105,11 @@ def split_url_params_2(params: dict):
     params = create_filt_from_param(params)
     # print(type(params), params['unreal_key'])
 
-    data = get_data(field=field, qualif=qualif, job_opening=job_opening, proposal_workless=proposal_workless, filt=params)
+    data = get_data(field=field, qualif=qualif, job_opening=job_opening, proposal_workless=proposal_workless,
+                    filt=params)
     data = decorate_data(data)
     return data
+
 
 def create_filt_from_param(param: dict):
     from datetime import date
@@ -127,10 +132,12 @@ def create_filt_from_param(param: dict):
     # print(param)
     return param1
 
+
 def get_work_and_job_data(field, filt=lambda *a, **k: True, **kwargs):
     from data_analyze.asks_offer_changes import globalGetChanges
 
     return zip(*[globalGetChanges(year, field, **kwargs) for year in filter(filt, range(1900, 2100))])
+
 
 def get_data(field=None, qualif=set(), filt=dict(), **kwargs):
     if field:
@@ -138,11 +145,12 @@ def get_data(field=None, qualif=set(), filt=dict(), **kwargs):
         data = get_work_and_job_data(field, filt.pop("year", lambda *a, **k: True), **kwargs)
         data = [map(lambda i: list(filter(lambda j: j[0] in qualif, i.items())), dat) for dat in data]
         # print(filt.get("count_filt1"), filt.get("unreal_key"))
-        data = [list(map(lambda i: list(filter(lambda j: filt.get("count_filt", lambda *a, **k: True)(j[1]), i)), dat)) for dat in data]
+        data = [list(map(lambda i: list(filter(lambda j: filt.get("count_filt", lambda *a, **k: True)(j[1]), i)), dat))
+                for dat in data]
         # print('--&&^^^^^', *[list(i) for i in data], sep='\n')
         # data = [[one_year for one_year in dat] for dat in data]
         return data
 
-def decorate_data(data):
 
+def decorate_data(data):
     return data

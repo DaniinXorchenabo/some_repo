@@ -2,8 +2,8 @@ import xlrd
 from json import loads, dumps
 from os.path import join as os_join, isfile
 
-
 path = ''
+
 
 def generate_opportunities_and_without_work_json_file(y=2018):
     title = [("Вакансии", "opportunities"),
@@ -27,6 +27,7 @@ def generate_opportunities_and_without_work_json_file(y=2018):
         with open(os_join(path, f"output/{title[t][1]}{y}.json"), "w", encoding="utf8") as file:
             print(dumps(data), file=file)
         # print('-----------')
+
 
 my_dir = "data_analyze"
 

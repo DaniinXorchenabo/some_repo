@@ -13,8 +13,7 @@ def count_male():
             row = sheet.row_values(rownum)
             if "-" in row[0]:
                 ad = 1 if si > 1 else 0
-                data["male"][row[0]] = data["male"].get(row[0], []) + [row[2+ad]]
-                data["female"][row[0]] = data["female"].get(row[0], []) + [row[3+ad]]
+                data["male"][row[0]] = data["male"].get(row[0], []) + [row[2 + ad]]
+                data["female"][row[0]] = data["female"].get(row[0], []) + [row[3 + ad]]
 
     return data
-

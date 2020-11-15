@@ -1,7 +1,7 @@
 from bottle import route, run, error, template, request, response, Bottle
 from json import dumps
-app = application = Bottle()
 
+app = application = Bottle()
 
 
 # class EnableCors(object):
@@ -22,7 +22,7 @@ app = application = Bottle()
 #         return _enable_cors
 
 
-def temp(file_name, *args,  title="", extension=".html", template_dir="view/", **kwargs):
+def temp(file_name, *args, title="", extension=".html", template_dir="view/", **kwargs):
     file_name = template_dir + file_name + extension
     return template("view/layout/skeleton.html", body_file=file_name)
 

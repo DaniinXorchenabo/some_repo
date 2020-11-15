@@ -1,5 +1,6 @@
 import xlrd
 from json import loads, dumps
+
 rb = xlrd.open_workbook('Выпуск учреждений профобразования.xlsx')
 sheet = rb.sheet_by_index(0)
 data = {}
@@ -17,4 +18,3 @@ print(data)
 
 with open("graduates.json", "w", encoding="utf8") as file:
     print(dumps(data), file=file)
-

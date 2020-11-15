@@ -38,6 +38,7 @@ def globalGetChanges(year, section, proposal_workless=False, job_opening=False):
 
     return data  # data_1{квалификация: количество}
 
+
 def base_get_json_data():
     from datetime import date
     count = 0
@@ -55,11 +56,12 @@ def base_get_json_data():
         with open(loc_path, "r") as file:
             return loads(file.read())
 
+
 def get_all_section():
     data = base_get_json_data()
     if bool(data):
         return list(data.keys())
-    return  data
+    return data
 
 
 def get_qualifications_from_section(section, filt=lambda *a, **k: True):
@@ -69,6 +71,7 @@ def get_qualifications_from_section(section, filt=lambda *a, **k: True):
         # print(*data, sep='\n')
         return list(filter(filt, data))
     return []
+
 
 def get_years(max_deep_in_last=30):
     from datetime import date
@@ -88,6 +91,7 @@ def get_years(max_deep_in_last=30):
         years.append(year)
     # print(years)
     return years
+
 
 my_dir = "data_analyze"
 if __name__ == '__main__':

@@ -15,7 +15,6 @@ def predictArr(arr):
     return arr[-1] + df
 
 
-
 def analyzeJob(job, data):
     array = [el[job] for el in data]
     return array

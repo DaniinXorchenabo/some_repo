@@ -1,7 +1,4 @@
-
-
 def show(data, labels=[], title="", xlabel="", ylabel="", dotted=False, namefile=None, datax=None):
-
     import matplotlib.pyplot as plt
     plt.title(title)
 
@@ -18,7 +15,6 @@ def show(data, labels=[], title="", xlabel="", ylabel="", dotted=False, namefile
         if dotted:
             plt.scatter(x=range(len(el)) if not datax else datax[i], y=el, label=next_label)
 
-
     plt.legend(loc="lower left")
 
     plt.grid()
@@ -31,7 +27,6 @@ def show(data, labels=[], title="", xlabel="", ylabel="", dotted=False, namefile
 
 
 def histogram(arr, title="", namefile=None, yrange=None):
-
     import matplotlib.pyplot as plt
     fig, axes = plt.subplots(1, 1)
     plt.title(title)
