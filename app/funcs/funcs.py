@@ -139,7 +139,7 @@ def get_data(field=None, qualif=set(), filt=dict(), **kwargs):
         data = [map(lambda i: list(filter(lambda j: j[0] in qualif, i.items())), dat) for dat in data]
         # print(filt.get("count_filt1"), filt.get("unreal_key"))
         data = [list(map(lambda i: list(filter(lambda j: filt.get("count_filt", lambda *a, **k: True)(j[1]), i)), dat)) for dat in data]
-        # print('--&&^^^^^', *[list(i) for i in data], sep='\n')
+        print('--&&^^^^^', *[list(i) for i in data], sep='\n')
         # data = [[one_year for one_year in dat] for dat in data]
         return data
 

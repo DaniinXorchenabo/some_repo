@@ -9,7 +9,7 @@ def hello():
     return "Hello World!"
 
 
-@app.route('/test', method=["GET", "POST"])
+@app.route('/test', method=["GET", "POST"])  #
 def root_thie_site():
     response.set_header('Access-Control-Allow-Origin', '*')
     response.add_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
@@ -19,7 +19,7 @@ def root_thie_site():
     print('test')
 
     if request.GET:
-        #.decode('utf8')
+        # .decode('utf8')
         data = split_url_params_2(dict(request.params.decode()))
         response.content_type = 'application/json'
         return dumps(data)
@@ -28,11 +28,25 @@ def root_thie_site():
     return temp("main_page", param="dfdf")
 
 
+@app.route('/get_section', method=["GET", "POST"])  # - список сфер
+def get_section():
+    return []
+
+
+@app.route('/get_qualification', method=["GET", "POST"])  # ?section=сфера - список квалификаций
+def get_qualification():
+    pass
+
+
+@app.route('/get_years', method=["GET", "POST"])  # ?section_flag - список годов
+def get_years():
+    pass
+
+
 @app.route('/')
 def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
     return "main page 1111"
-
 
 
 if __name__ == '__main__':
