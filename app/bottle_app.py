@@ -20,12 +20,9 @@ def root_thie_site():
 
     if request.GET:
         #.decode('utf8')
-        params = split_url_params_2(dict(request.params.decode()))
-        # print(params)
-        rv = [{"id": 1, "name": "Test Item 1"}, {"id": 2, "name": "Test Item 2"}]
+        data = split_url_params_2(dict(request.params.decode()))
         response.content_type = 'application/json'
-        # print(dumps(rv))
-        return dumps(rv)
+        return dumps(data)
     # http://localhost:8080/test?is_work=yes
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
     return temp("main_page", param="dfdf")
