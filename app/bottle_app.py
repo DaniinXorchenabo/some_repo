@@ -47,7 +47,9 @@ def get_qualification():
 
 @app.route('/get_years', method=["GET", "POST"])  # ?section_flag - список годов
 def get_years():
-    pass
+    from data_analyze.asks_offer_changes import get_years
+
+    return dumps(get_years())
 
 
 @app.route('/')

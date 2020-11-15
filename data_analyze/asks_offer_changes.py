@@ -64,10 +64,30 @@ def get_all_section():
 
 def get_qualifications_from_section(section, filt=lambda *a, **k: True):
     data = base_get_json_data()
-    data = unsetBrackets(data[section])
-    print(*data, sep='\n')
-    return list(filter(filt, data))
+    if bool(data):
+        data = unsetBrackets(data[section])
+        # print(*data, sep='\n')
+        return list(filter(filt, data))
+    return []
 
+def get_years(max_deep_in_last=30):
+    from datetime import date
+    count = 0
+    years = []
+    while True:
+        year = date.today().year - count
+        count += 1
+        loc_path = os_join(path, str(f"output/without_work{year}.json"))
+        if not isfile(loc_path):
+            from data_analyze.ex import generate_opportunities_and_without_work_json_file
+            generate_opportunities_and_without_work_json_file(year)
+        if not isfile(loc_path):
+            if count > max_deep_in_last:
+                break
+            continue
+        years.append(year)
+    # print(years)
+    return years
 
 my_dir = "data_analyze"
 if __name__ == '__main__':
