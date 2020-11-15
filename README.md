@@ -47,3 +47,9 @@ installing:
     /get_years - список годов, за которые мы получаем данные
         (года пишутся также, как и возраст)
 
+Запросы по авторизации и регистрации
+
+    /registration?name=you_login&password=you_password&email=you_emmeil
+        - регистрация Требует имени, пароля и эмейла
+    /login?name=you_login&password=you_password
+        - авторизация Требует имени и пароля

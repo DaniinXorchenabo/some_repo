@@ -55,7 +55,7 @@ def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
     return "main page 1111"
 
-@app.route('/registration', method=["GET", "POST"])  # ?name=you_login&password=you_password&email=you_emmeil - список квалификаций
+@app.route('/registration', method=["GET", "POST"])  # ?name=you_login&password=you_password&email=you_emmeil
 @db_session
 def registration():
     if request.GET:
@@ -75,7 +75,7 @@ def registration():
         return dumps({"messeng": messeng})
     return "some_page"
 
-@app.route('/login', method=["GET", "POST"])  # ?name=you_login&password=you_password - список квалификаций
+@app.route('/login', method=["GET", "POST"])  # ?name=you_login&password=you_password
 @db_session
 def registration():
     if request.GET:
