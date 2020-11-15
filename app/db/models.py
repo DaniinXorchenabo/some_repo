@@ -4,11 +4,12 @@ from pony.orm import *
 db = Database()
 
 
-class Admin(db.Entity):
+class User(db.Entity):
     id = PrimaryKey(int, auto=True)
-    name = Optional(str)
+    name = Required(str, unique=True)
     password = Optional(str)
-    mail = Optional(str)
+    email = Required(str, unique=True)
+
 
 
 def is_DB_created(path):
