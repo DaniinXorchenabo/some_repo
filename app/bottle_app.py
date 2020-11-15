@@ -30,12 +30,19 @@ def root_thie_site():
 
 @app.route('/get_section', method=["GET", "POST"])  # - список сфер
 def get_section():
-    return []
+    from data_analyze.asks_offer_changes import get_all_section
+    # print(*get_all_section(), sep='\n')
+    return dumps(get_all_section())
 
 
 @app.route('/get_qualification', method=["GET", "POST"])  # ?section=сфера - список квалификаций
 def get_qualification():
-    pass
+    if request.GET:
+        from data_analyze.asks_offer_changes import get_qualifications_from_section
+
+        section = [i for i in dict(request.params.decode()).values()][0]
+        data = get_qualifications_from_section(section)
+        return dumps(data)
 
 
 @app.route('/get_years', method=["GET", "POST"])  # ?section_flag - список годов

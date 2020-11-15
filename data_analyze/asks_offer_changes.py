@@ -14,7 +14,7 @@ def unsetBrackets(anydict):
 def globalGetChanges(year, section, proposal_workless=False, job_opening=False):
     global path
     pathes = [os_join(path, str(f"output/without_work{year}.json")) if not proposal_workless else '',
-              os_join(path, str(f"output/opportunities{year}.json"))if not job_opening else '']
+              os_join(path, str(f"output/opportunities{year}.json")) if not job_opening else '']
 
     data = []
     for loc_path in filter(bool, pathes):
@@ -25,7 +25,7 @@ def globalGetChanges(year, section, proposal_workless=False, job_opening=False):
             return dict(), dict()
         with open(loc_path, "r") as file:
             data.append(loads(file.read()))
-
+    print(*data[0].keys(), sep='\n')
     data = [unsetBrackets(dat[section]) for dat in data]
     if job_opening or proposal_workless and len(data) > 1:
         return data[0]
@@ -37,6 +37,36 @@ def globalGetChanges(year, section, proposal_workless=False, job_opening=False):
     data[1].update({key: 0 for key in null_elements1})
 
     return data  # data_1{квалификация: количество}
+
+def base_get_json_data():
+    from datetime import date
+    count = 0
+    while True:
+        year = date.today().year - count
+        count += 1
+        loc_path = os_join(path, str(f"output/without_work{year}.json"))
+        if not isfile(loc_path):
+            from data_analyze.ex import generate_opportunities_and_without_work_json_file
+            generate_opportunities_and_without_work_json_file(year)
+        if not isfile(loc_path):
+            if count > 10:
+                return []
+            continue
+        with open(loc_path, "r") as file:
+            return loads(file.read())
+
+def get_all_section():
+    data = base_get_json_data()
+    if bool(data):
+        return list(data.keys())
+    return  data
+
+
+def get_qualifications_from_section(section, filt=lambda *a, **k: True):
+    data = base_get_json_data()
+    data = unsetBrackets(data[section])
+    print(*data, sep='\n')
+    return list(filter(filt, data))
 
 
 my_dir = "data_analyze"

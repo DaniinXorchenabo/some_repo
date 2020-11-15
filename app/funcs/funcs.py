@@ -118,7 +118,7 @@ def create_filt_from_param(param: dict):
         "count_filt": create_filt_from_number_set,
         "gender": lambda i: lambda param: param in {"m": ["м"], "w": ["ж"], "mw": ["м", "ж"]}.get(i, ["м", "ж"])
     }
-    defoult_filt_dict = {"year": lambda i: i == date.today().year}
+    defoult_filt_dict = {"year": lambda i: i == date.today().year - 1}
     param = {key: transforming_dict[key](val) for key, val in param.items()}
     # print(param)
     defoult_filt_dict.update(param)
