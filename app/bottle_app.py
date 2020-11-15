@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 from funcs.libs import *
 from funcs.funcs import *
+from bottle import route, run, error, template, request, response, Bottle
 
 
 @app.route('/hello')
@@ -9,17 +11,18 @@ def hello():
 
 @app.route('/test', method=["GET", "POST"])
 def root_thie_site():
+    response.set_header('Access-Control-Allow-Origin', '*')
+    response.add_header('Access-Control-Allow-Methods', 'GET, POST, PUT, OPTIONS')
+    # response.headers['Content-type'] = 'application/json'
     #  <url>?field_of_activity=bool_or_name&qualification=bool_or_name&age=1@3@5-10&work_years=1@3@5-10&gender=m|w|mw
     # ?field_of_activity=РАЗДЕЛ F СТРОИТЕЛЬСТВО&qualification=Бетонщик&year=2017-2019&job_opening&proposal_workless
     print('test')
 
     if request.GET:
-        params = split_url_params(dict(request.params))
-        print(params)
-        rv = [{"id": 1, "name": "Test Item 1"}, {"id": 2, "name": "Test Item 2"}]
+        #.decode('utf8')
+        data = split_url_params_2(dict(request.params.decode()))
         response.content_type = 'application/json'
-        print(dumps(rv))
-        return dumps(rv)
+        return dumps(data)
     # http://localhost:8080/test?is_work=yes
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
     return temp("main_page", param="dfdf")
@@ -28,9 +31,10 @@ def root_thie_site():
 @app.route('/')
 def root_thie_site():
     # return template('Здравствуй {{name}}, как дела?', name="Dfcz")
-    return "main page"
+    return "main page 1111"
 
 
 
 if __name__ == '__main__':
-    run(app=app, host="0.0.0.0", port=8080, quiet=False, reloader=False)
+    # app.install(EnableCors())
+    run(app=app, host="0.0.0.0", port=8090, quiet=False, reloader=False)

@@ -11,37 +11,32 @@ def unsetBrackets(anydict):
     return dict(temp)
 
 
-def globalGetChanges(year, section):
-    file_asks = os_join(path, str(f"output/without_work{year}.json"))
-    file_offer = os_join(path, str(f"output/opportunities{year}.json"))
-    if not isfile(file_asks):
-        from data_analyze.ex import generate_opportunities_and_without_work_json_file
-        generate_opportunities_and_without_work_json_file(year)
-    with open(file_asks, "r") as file:
-        data_1 = loads(file.read())
+def globalGetChanges(year, section, proposal_workless=False, job_opening=False):
+    global path
+    pathes = [os_join(path, str(f"output/without_work{year}.json")) if not proposal_workless else '',
+              os_join(path, str(f"output/opportunities{year}.json"))if not job_opening else '']
 
-    if not isfile(file_offer):
-        from data_analyze.ex import generate_opportunities_and_without_work_json_file
-        generate_opportunities_and_without_work_json_file(year)
-    with open(file_offer, "r") as file:
-        data_2 = loads(file.read())
+    data = []
+    for loc_path in filter(bool, pathes):
+        if not isfile(loc_path):
+            from data_analyze.ex import generate_opportunities_and_without_work_json_file
+            generate_opportunities_and_without_work_json_file(year)
+        if not isfile(loc_path):
+            return dict(), dict()
+        with open(loc_path, "r") as file:
+            data.append(loads(file.read()))
 
-    data_1 = unsetBrackets(data_1[section])
-    data_2 = unsetBrackets(data_2[section])
+    data = [unsetBrackets(dat[section]) for dat in data]
+    if job_opening or proposal_workless and len(data) > 1:
+        return data[0]
 
-    null_elements1 = set(data_1.keys()) - set(data_2.keys())  # элементы, которых нет во втором
-    null_elements2 = set(data_2.keys()) - set(data_1.keys())  # элементы, которых нет в первом
+    null_elements1 = set(data[0].keys()) - set(data[1].keys())  # элементы, которых нет во втором
+    null_elements2 = set(data[1].keys()) - set(data[0].keys())  # элементы, которых нет в первом
 
-    data_1.update({key: 0 for key in null_elements2})
-    data_2.update({key: 0 for key in null_elements1})
-    # print(set(data_1.keys()) == set(data_2.keys()))
-    # for nul_el in list(null_elements1) + list(null_elements2):
-    #     data_1[nul_el] = data_1.get(nul_el, 0)
-    #     data_2[nul_el] = data_2.get(nul_el, 0)
+    data[0].update({key: 0 for key in null_elements2})
+    data[1].update({key: 0 for key in null_elements1})
 
-    # both = set(list(data_1.keys()) + list(data_2.keys())) - null_elements1 - null_elements2
-
-    return data_1, data_2  # data_1{квалификация: количество}
+    return data  # data_1{квалификация: количество}
 
 
 my_dir = "data_analyze"

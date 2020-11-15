@@ -1,6 +1,6 @@
 import xlrd
 from json import loads, dumps
-from os.path import join as os_join
+from os.path import join as os_join, isfile
 
 
 path = ''
@@ -9,9 +9,11 @@ def generate_opportunities_and_without_work_json_file(y=2018):
     title = [("Вакансии", "opportunities"),
              ("Безработные", "without_work")]
     title = [(name, file_name, os_join(path, file_name)) for [name, file_name] in title]
-    rb_list = [xlrd.open_workbook(os_join(path, f'input/{i[0]}НаКонец{y}.xlsx')) for i in title]
+    rb_list = [os_join(path, f'input/{i[0]}НаКонец{y}.xlsx') for i in title]
+    rb_list = [xlrd.open_workbook(path) for path in rb_list if isfile(path) or print("Не удается найти файл!", path)]
+
     sheet_list = [rb.sheet_by_index(0) for rb in rb_list]
-    for t, sheet in enumerate(sheet_list) :
+    for t, sheet in enumerate(sheet_list):
         data = {}
         current = ""
         for rownum in range(sheet.nrows)[5:]:
