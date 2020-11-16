@@ -1,0 +1,54 @@
+name: Checks
+
+on:
+  push:
+    branches:
+    - master
+    - test
+  pull_request:
+    branches:
+    - master
+    - test
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Lint with eslint
+        run: npm run lint:eslint
+
+      - name: Lint with prettier
+        run: npm run lint:prettier
+
+      - name: Lint with tsc
+        run: npm run lint:tsc
+
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test

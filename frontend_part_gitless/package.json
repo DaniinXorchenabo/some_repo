@@ -1,0 +1,73 @@
+{
+  "private": true,
+  "homepage": ".",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "fix": "echo 0;",
+    "fix:eslint": "echo 0;",
+    "fix:prettier": "prettier --write .",
+    "lint": "echo 0;",
+    "lint:eslint": "echo 0;",
+    "lint:prettier": "prettier --check .",
+    "lint:tsc": "echo 0;",
+    "start": "next start",
+    "test": "jest"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "post-commit": "run-if-changed",
+      "post-checkout": "run-if-changed",
+      "post-merge": "run-if-changed",
+      "post-rewrite": "run-if-changed"
+    }
+  },
+  "lint-staged": {
+    "**/*": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "next": "^9.4.2",
+    "next-compose-plugins": "^2.2.0",
+    "next-fonts": "^1.1.0",
+    "next-images": "^1.4.0",
+    "qs": "^6.5.2",
+    "react": "^16.13.1",
+    "react-awesome-slider": "^2.1.1",
+    "react-card-flip": "^1.0.10",
+    "react-dom": "^16.13.1",
+    "react-flexbox-grid": "^2.1.2",
+    "react-grid-layout": "^0.18.3",
+    "recharts": "^1.8.5"
+  },
+  "devDependencies": {
+    "@hkdobrev/run-if-changed": "^0.3.1",
+    "@types/jest": "^25.2.2",
+    "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "@typescript-eslint/eslint-plugin": "^2.33.0",
+    "@typescript-eslint/parser": "^2.33.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-json": "^2.1.1",
+    "eslint-plugin-react": "^7.20.0",
+    "eslint-plugin-react-hooks": "^4.0.2",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "husky": "^4.2.5",
+    "jest": "^26.0.1",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5",
+    "prettier-plugin-packagejson": "^2.2.3",
+    "typescript": "^3.9.2"
+  },
+  "oldScripts": {
+    "lint": "npm run lint:eslint && npm run lint:prettier && npm run lint:tsc"
+  },
+  "run-if-changed": {
+    "package-lock.json": "npm install"
+  }
+}

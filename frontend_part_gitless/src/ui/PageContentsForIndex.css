@@ -1,0 +1,43 @@
+@font-face {
+  font-family: "Montserrat";
+  src: local("Montserrat"), local("Montserrat-Regular"),
+    url("montserrat.woff2") format("woff2"),
+    url("montserrat.woff") format("woff"),
+    url("montserrat.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+body {
+  background-color: #e5e5e5;
+  font-family: "Montserrat";
+}
+
+a {
+  text-decoration: none;
+  color: white; /*insted of green */
+}
+
+/*
+  #bottom{
+      color:white;
+      background-color:lightgray;
+  } 
+  #bottom a{
+      color:white;
+  }
+  #slideCalculator{
+    background-color:aqua;
+  }
+  #slideEcology{
+      background-color: lightgreen;
+  }
+  #contacts{
+      background-color:lightgrey;
+  } 
+  #slideCoderbook{
+    background-color:rgb(255,38,67); 
+  }
+  .slider{
+    color:white;
+  }  */

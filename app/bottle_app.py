@@ -28,7 +28,7 @@ def root_thie_site():
 @app.route('/get_section', method=["GET", "POST"])  # - список сфер
 def get_section():
     from data_analyze.asks_offer_changes import get_all_section
-    # print(*get_all_section(), sep='\n')
+    print(*get_all_section(), sep='\n')
     return dumps(get_all_section())
 
 
